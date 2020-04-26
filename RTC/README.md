@@ -1,3 +1,3 @@
 # RTC
 
-![Electrical diagram](RTC Electrical diagram.png)
+![Electrical diagram](RTC/RTC Electrical diagram.png)
