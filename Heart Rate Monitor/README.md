@@ -1,4 +1,4 @@
 # Heart Rate Monitor
 
 
-![Circuit](GPS+RTC_Electrical_diagram.png)
+![Circuit](Heart_Rate_Monitor_Electrical_diagram.png)
