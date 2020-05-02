@@ -2,4 +2,4 @@
 
 
 
-![Circuit](Accelerometer Electrical diagram.png)
+![Circuit](Accelerometer/Accelerometer Electrical diagram.png)
