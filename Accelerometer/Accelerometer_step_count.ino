@@ -1,3 +1,5 @@
+
+
 #include <Wire.h>
 
 #define DEVICE (0x53)    //ADXL345 device address
