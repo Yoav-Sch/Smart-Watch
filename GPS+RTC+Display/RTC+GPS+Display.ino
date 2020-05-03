@@ -45,17 +45,11 @@ void setup() {
   // Testing
   oled.println("Hello world!");
   delay(1000);
-
-  if (millis() > 5000 && gps.charsProcessed() < 10)
-  {
-    oled.println("Error: No GPS detected");
-    while (true);
-  }
   // set RTC time and date with GPS input
   setDS3231time();
   oled.clear();
-  }
-  void loop() {
+}
+void loop() {
   //read time from RTC to update time and val
   readDS3231time(&second, &minute, &hour, &dayOfWeek, &day, &month,  &year);
   //display time in line 0
@@ -68,9 +62,9 @@ void setup() {
   oled.print(":");
   oled.print(second < 10 ? "0" : "");
   oled.print(second);
-  }
+}
 
-//functions  
+//functions
 byte decToBcd(byte val)// convert dec to bin
 {
   return ((val / 10 * 16) + (val % 10));
@@ -83,23 +77,25 @@ byte bcdToDec(byte val)// convert bin to dec
 
 void setDS3231time() { // set RTC time and date with GPS input
   // check for valid data
-  if (gps.date.isValid() && gps.time.isValid()) {
-    Wire.beginTransmission(DS3231_I2C_ADDRESS);
-    Wire.write(0);
-    // set time
-    Wire.write(decToBcd(gps.time.second()));
-    Wire.write(decToBcd(gps.time.minute()));
-    Wire.write(decToBcd(gps.time.hour()));
-    // set date
-    Wire.write(decToBcd(dayOfWeek));
-    Wire.write(decToBcd(gps.date.day()));
-    Wire.write(decToBcd(gps.date.month()));
-    Wire.write(decToBcd(gps.date.year()));
-    Wire.endTransmission();
-  }
-  else {
-    //if the time and date are not valid rerun the function
-    setDS3231time();
+  if (gps.encode(ss.read())) {
+    if (gps.date.isValid() && gps.time.isValid()) {
+      Wire.beginTransmission(DS3231_I2C_ADDRESS);
+      Wire.write(0);
+      // set time
+      Wire.write(decToBcd(gps.time.second()));
+      Wire.write(decToBcd(gps.time.minute()));
+      Wire.write(decToBcd(gps.time.hour()));
+      // set date
+      Wire.write(decToBcd(dayOfWeek));
+      Wire.write(decToBcd(gps.date.day()));
+      Wire.write(decToBcd(gps.date.month()));
+      Wire.write(decToBcd(gps.date.year()));
+      Wire.endTransmission();
+    }
+    else {
+      //if the time and date are not valid rerun the function
+      setDS3231time();
+    }
   }
 }
 // read RTC time and date
